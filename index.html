@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>💙 Maafkan Aku Ya Sayang 💙</title>
+  <style>
+    @import url('[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Dancing+Script:wght@700&display=swap)');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0a0a2e 0%, #1a1a6e 30%, #0d47a1 60%, #1565c0 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: white;
+    }
+
+    /* ===== FLOATING BUBBLES ===== */
+    .bubbles {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .bubble {
+      position: absolute;
+      bottom: -100px;
+      border-radius: 50%;
+      animation: floatUp linear infinite;
+      opacity: 0.15;
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(0) rotate(0deg); opacity: 0.15; }
+      100% { transform: translateY(-110vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* ===== STARS ===== */
+    .stars {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle ease-in-out infinite;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(1); }
+      50%       { opacity: 1;   transform: scale(1.5); }
+    }
+
+    /* ===== HEARTS RAIN ===== */
+    .heart-rain {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .heart-drop {
+      position: absolute;
+      top: -50px;
+      font-size: 1.5rem;
+      animation: rainDown linear infinite;
+      opacity: 0.4;
+    }
+    @keyframes rainDown {
+      0%   { transform: translateY(-50px) rotate(-15deg); opacity: 0.4; }
+      100% { transform: translateY(110vh)  rotate(15deg);  opacity: 0; }
+    }
+
+    /* ===== LAYOUT ===== */
+    .container {
+      position: relative;
+      z-index: 10;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      text-align: center;
+      padding: 60px 20px 40px;
+      animation: fadeInDown 1s ease;
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .emoji-big {
+      font-size: 5rem;
+      display: block;
+      animation: bounce 1.2s ease infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-18px); }
+    }
+
+    .hero h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      color: #90caf9;
+      text-shadow: 0 0 30px #42a5f5, 0 0 60px #1976d2;
+      margin: 20px 0 10px;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 20px #42a5f5; }
+      to   { text-shadow: 0 0 50px #90caf9, 0 0 80px #42a5f5; }
+    }
+
+    .hero p.subtitle {
+      font-size: 1.1rem;
+      color: #bbdefb;
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    /* ===== PHOTO GALLERY ===== */
+    .gallery-title {
+      text-align: center;
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.5rem;
+      color: #90caf9;
+      margin: 50px 0 30px;
+      animation: fadeIn 1s ease;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      padding: 10px;
+    }
+
+    .photo-card {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(33, 150, 243, 0.4);
+      border: 3px solid rgba(144, 202, 249, 0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      animation: fadeInUp 0.8s ease both;
+      background: rgba(255,255,255,0.05);
+    }
+    .photo-card:nth-child(1) { animation-delay: 0.1s; }
+    .photo-card:nth-child(2) { animation-delay: 0.2s; }
+    .photo-card:nth-child(3) { animation-delay: 0.3s; }
+    .photo-card:nth-child(4) { animation-delay: 0.4s; }
+    .photo-card:nth-child(5) { animation-delay: 0.5s; }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .photo-card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 20px 60px rgba(33, 150, 243, 0.7);
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.85);
+      transition: filter 0.3s ease;
+    }
+    .photo-card:hover img { filter: brightness(1); }
+
+    .photo-caption {
+      background: linear-gradient(to top, rgba(13,71,161,0.95), transparent);
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 20px 15px 15px;
+      font-size: 0.85rem;
+      color: #e3f2fd;
+      text-align: center;
+    }
+
+    .heart-badge {
+      position: absolute;
+      top: 12px; right: 12px;
+      background: rgba(33, 150, 243, 0.8);
+      border-radius: 50%;
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      animation: pulse 1.5s ease infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.3); }
+    }
+
+    /* ===== SORRY LETTER ===== */
+    .letter-section {
+      margin: 60px 0;
+      animation: fadeIn 1s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .letter-box {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(20px);
+      border: 2px solid rgba(144, 202, 249, 0.3);
+      border-radius: 30px;
+      padding: 50px 40px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+
+    .letter-box::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(33,150,243,0.1) 0%, transparent 70%);
+      animation: rotateGlow 8s linear infinite;
+    }
+    @keyframes rotateGlow {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    .letter-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.8rem;
+      color: #90caf9;
+      text-align: center;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .letter-text {
+      font-size: 1.05rem;
+      line-height: 2;
+      color: #e3f2fd;
+      position: relative;
+      text-align: center;
+    }
+
+    .letter-text p { margin-bottom: 15px; }
+
+    .highlight {
+      color: #90caf9;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    /* ===== SORRY COUNTER ===== */
+    .counter-section {
+      text-align: center;
+      margin: 50px 0;
+    }
+
+    .counter-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2rem;
+      color: #90caf9;
+      margin-bottom: 20px;
+    }
+
+    .counter-box {
+      display: inline-block;
+      background: rgba(33, 150, 243, 0.2);
+      border: 2px solid #42a5f5;
+      border-radius: 20px;
+      padding: 20px 40px;
+      margin-bottom: 20px;
+    }
+
+    .counter-number {
+      font-size: 4rem;
+      font-weight: 800;
+      color: #90caf9;
+      display: block;
+      line-height: 1;
+      animation: countUp 0.1s ease;
+    }
+
+    .counter-label {
+      font-size: 0.9rem;
+      color: #bbdefb;
+    }
+
+    .sorry-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #1976d2, #42a5f5);
+      color: white;
+      border: none;
+      padding: 15px 40px;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(33, 150, 243, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sorry-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.3), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .sorry-btn:hover::after { opacity: 1; }
+    .sorry-btn:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 15px 40px rgba(33, 150, 243, 0.7);
+    }
+    .sorry-btn:active { transform: scale(0.97); }
+
+    /* ===== EMOJI BURST ===== */
+    .burst-container {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 999;
+    }
+    .burst-emoji {
+      position: absolute;
+      font-size: 2rem;
+      animation: burstOut 1.5s ease forwards;
+      pointer-events: none;
+    }
+    @keyframes burstOut {
+      0%   { transform: translate(0,0) scale(1); opacity: 1; }
+      100% { transform: translate(var(--tx), var(--ty)) scale(0.3); opacity: 0; }
+    }
+
+    /* ===== FORGIVE SECTION ===== */
+    .forgive-section {
+      text-align: center;
+      margin: 50px 0;
+      padding: 40px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 30px;
+      border: 2px solid rgba(144,202,249,0.2);
+    }
+
+    .forgive-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.5rem;
+      color: #90caf9;
+      margin-bottom: 20px;
+    }
+
+    .forgive-subtitle { color: #bbdefb; margin-bottom: 30px; font-size: 1rem; }
+
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .btn-yes {
+      background: linear-gradient(135deg, #1565c0, #42a5f5);
+      color: white;
+      border: none;
+      padding: 18px 50px;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 8px 25px rgba(33,150,243,0.5);
+    }
+    .btn-yes:hover {
+      transform: scale(1.1);
+      box-shadow: 0 15px 40px rgba(33,150,243,0.8);
+    }
+
+    .btn-no {
+      background: rgba(255,255,255,0.1);
+      color: #90caf9;
+      border: 2px solid #42a5f5;
+      padding: 18px 50px;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    /* ===== MODAL ===== */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,12,0.8);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.active { display: flex; }
+
+    .modal-box {
+      background: linear-gradient(135deg, #0d47a1, #1565c0);
+      border: 3px solid #90caf9;
+      border-radius: 30px;
+      padding: 50px 40px;
+      text-align: center;
+      max-width: 480px;
+      width: 90%;
+      animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 0 80px rgba(33,150,243,0.6);
+    }
+    @keyframes popIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+
+    .modal-emoji { font-size: 4rem; display: block; margin-bottom: 15px; }
+    .modal-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.5rem;
+      color: #90caf9;
+      margin-bottom: 15px;
+    }
+    .modal-text { color: #bbdefb; font-size: 1rem; line-height: 1.8; margin-bottom: 25px; }
+
+    .btn-close {
+      background: linear-gradient(135deg, #42a5f5, #90caf9);
+      color: #0d47a1;
+      border: none;
+      padding: 14px 40px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn-close:hover { transform: scale(1.05); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #90caf9;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.5rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* ===== PROGRESS SORRY ===== */
+    .sorry-progress {
+      background: rgba(255,255,255,0.1);
+      border-radius: 20px;
+      height: 14px;
+      width: 80%;
+      max-width: 400px;
+      margin: 15px auto 0;
+      overflow: hidden;
+    }
+    .sorry-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #1976d2, #90caf9);
+      border-radius: 20px;
+      transition: width 0.5s ease;
+      box-shadow: 0 0 10px #42a5f5;
+    }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0a0a2e; }
+    ::-webkit-scrollbar-thumb { background: #1976d2; border-radius: 10px; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 600px) {
+      .letter-box { padding: 30px 20px; }
+      .btn-group { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Bubbles Background -->
+  <div class="bubbles" id="bubbles"></div>
+  <div class="stars" id="stars"></div>
+  <div class="heart-rain" id="heartRain"></div>
+  <div class="burst-container" id="burstContainer"></div>
+
+  <div class="container">
+
+    <!-- HERO -->
+    <div class="hero">
+      <span class="emoji-big">💙</span>
+      <h1>Maafkan Aku, Sayang...</h1>
+      <p class="subtitle">
+        Ada kata-kata yang lebih mudah dirasakan daripada diucapkan...<br>
+        Tapi hari ini aku beranikan diri untuk mengatakannya 🥺
+      </p>
+    </div>
+
+    <!-- PHOTO GALLERY -->
+    <h2 class="gallery-title">📸 Kenangan Kita yang Indah</h2>
+    <div class="gallery">
+
+      <div class="photo-card">
+        <!-- Ganti src dengan path foto kamu -->
+        <img src="foto1.jpg" alt="Foto 1" onerror="this.src='[via.placeholder.com](https://via.placeholder.com/400x300/1565c0/90caf9?text=📸+Foto+1)'"/>
+        <div class="heart-badge">💙</div>
+        <div class="photo-caption">Senyummu bikin hari-hariku berwarna 🌟</div>
+      </div>
+
+      <div class="photo-card">
+        <img src="foto2.jpg" alt="Foto 2" onerror="this.src='[via.placeholder.com](https://via.placeholder.com/400x300/0d47a1/bbdefb?text=📸+Foto+2)'"/>
+        <div class="heart-badge">💫</div>
+        <div class="photo-caption">Kamu selalu cantik di setiap momen ✨</div>
+      </div>
+
+      <div class="photo-card">
+        <img src="foto3.jpg" alt="Foto 3" onerror="this.src='[via.placeholder.com](https://via.placeholder.com/400x300/1976d2/e3f2fd?text=📸+Foto+3)'"/>
+        <div class="heart-badge">🌸</div>
+        <div class="photo-caption">Pose terbaikmu selalu memukau 💕</div>
+      </div>
+
+      <div class="photo-card">
+        <img src="foto4.jpg" alt="Foto 4" onerror="this.src='[via.placeholder.com](https://via.placeholder.com/400x300/1565c0/90caf9?text=📸+Foto+4)'"/>
+        <div class="heart-badge">🤠</div>
+        <div class="photo-caption">Momen seru bareng kamu, selalu lucu! 😄</div>
+      </div>
+
+      <div class="photo-card">
+        <img src="foto5.jpg" alt="Foto 5" onerror="this.src='[via.placeholder.com](https://via.placeholder.com/400x300/0d47a1/bbdefb?text=📸+Foto+5)'"/>
+        <div class="heart-badge">👍</div>
+        <div class="photo-caption">Semangat belajar bareng — tim terbaik! 💪</div>
+      </div>
+
+    </div>
+
+    <!-- SURAT MAAF -->
+    <div class="letter-section">
+      <div class="letter-box">
+        <h2 class="letter-title">💌 Surat Dari Hatiku</h2>
+        <div class="letter-text">
+          <p>Hai, <span class="highlight">kamu yang spesial... 💙</span></p>
+          <p>
+            Aku tahu ada hal yang aku lakukan yang mungkin menyakitimu,
+            dan untuk itu aku benar-benar <span class="highlight">minta maaf yang sebesar-besarnya</span>.
+          </p>
+          <p>
+            Kamu tahu kan, kadang orang yang paling kita sayang
+            justru yang paling mudah kita sakiti tanpa disengaja? 🥺
+          </p>
+          <p>
+            Aku tidak pernah berniat untuk membuatmu sedih.
+            Setiap momen bersamamu adalah <span class="highlight">kenangan terindah</span> yang selalu aku jaga di hati.
+          </p>
+          <p>
+            Dari senyum kecilmu, tawa lepasmu, sampai momen konyol kita berdua —
+            semuanya sangat berarti bagiku. 💫
+          </p>
+          <p>
+            Aku janji akan menjadi <span class="highlight">lebih baik</span>,
+            dan semoga kamu mau memberikan aku kesempatan itu.
+          </p>
+          <p style="margin-top:25px; font-family:'Dancing Script',cursive; font-size:1.8rem; color:#90caf9;">
+            Dengan sepenuh hati, 💙
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SORRY COUNTER -->
+    <div class="counter-section">
+      <h2 class="counter-title">🙏 Berapa Kali Aku Minta Maaf?</h2>
+      <div class="counter-box">
+        <span class="counter-number" id="sorryCount">0</span>
+        <span class="counter-label">kali aku memohon maaf 💙</span>
+      </div>
+      <div class="sorry-progress">
+        <div class="sorry-fill" id="sorryFill"></div>
+      </div>
+      <p style="color:#bbdefb; font-size:0.85rem; margin-top:10px;">
+        (Klik tombol di bawah untuk tambah hitungan 😄)
+      </p>
+      <br/>
+      <button class="sorry-btn" onclick="addSorry()">
+        💙 Maaf Ya Sayang! 💙
+      </button>
+    </div>
+
+    <!-- FORGIVE SECTION -->
+    <div class="forgive-section">
+      <h2 class="forgive-title">🥺 Sudikah Kamu Memaafkan Aku?</h2>
+      <p class="forgive-subtitle">
+        Jawab jujur ya... aku siap menerima apapun jawabanmu 💙
+      </p>
+      <div class="btn-group">
+        <button class="btn-yes" onclick="handleYes()">
+          💙 Iya, Aku Maafkan!
+        </button>
+        <button class="btn-no" id="noBtn" onclick="handleNo()">
+          😤 Belum...
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MODAL YES -->
+  <div class="modal-overlay" id="modalYes">
+    <div class="modal-box">
+      <span class="modal-emoji">🥳💙🎉</span>
+      <h2 class="modal-title">Yeay! Makasih Sayang!</h2>
+      <p class="modal-text">
+        Kamu baik banget mau memaafkan aku! 😭💙<br>
+        Aku janji akan menjadi yang terbaik untukmu.<br>
+        <strong>Love you to the moon and back! 🌙💫</strong>
+      </p>
+      <button class="btn-close" onclick="closeModal('modalYes')">
+        💙 Makasih Banyak!
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL NO -->
+  <div class="modal-overlay" id="modalNo">
+    <div class="modal-box">
+      <span class="modal-emoji">😢💔</span>
+      <h2 class="modal-title">Aku Ngerti...</h2>
+      <p class="modal-text">
+        Gak apa-apa, aku sabar nunggu 🥺<br>
+        Aku akan terus berusaha menjadi lebih baik.<br>
+        Karena kamu <strong>terlalu berharga</strong> untuk dilepaskan. 💙
+      </p>
+      <button class="btn-close" onclick="closeModal('modalNo')">
+        💙 Aku Akan Terus Berusaha
+      </button>
+    </div>
+  </div>
+
+  <footer>
+    Made with 💙 just for you ~ Always & Forever 🌙
+  </footer>
+
+  <script>
+    // ===== CREATE BUBBLES =====
+    const bubblesEl = document.getElementById('bubbles');
+    const colors = ['#1976d2','#42a5f5','#90caf9','#1565c0','#0d47a1'];
+    for (let i = 0; i < 18; i++) {
+      const b = document.createElement('div');
+      b.className = 'bubble';
+      const size = Math.random() * 80 + 20;
+      b.style.cssText = `
+        width:${size}px; height:${size}px;
+        left:${Math.random()*100}%;
+        background:${colors[Math.floor(Math.random()*colors.length)]};
+        animation-duration:${Math.random()*15+8}s;
+        animation-delay:${Math.random()*10}s;
+      `;
+      bubblesEl.appendChild(b);
+    }
+
+    // ===== CREATE STARS =====
+    const starsEl = document.getElementById('stars');
+    for (let i = 0; i < 80; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      const size = Math.random() * 3 + 1;
+      s.style.cssText = `
+        width:${size}px; height:${size}px;
+        top:${Math.random()*100}%;
+        left:${Math.random()*100}%;
+        animation-duration:${Math.random()*3+2}s;
+        animation-delay:${Math.random()*3}s;
+      `;
+      starsEl.appendChild(s);
+    }
+
+    // ===== HEART RAIN =====
+    const heartEl = document.getElementById('heartRain');
+    const heartEmojis = ['💙','💫','✨','🌟','💕','🤍'];
+    for (let i = 0; i < 15; i++) {
+      const h = document.createElement('div');
+      h.className = 'heart-drop';
+      h.textContent = heartEmojis[Math.floor(Math.random()*heartEmojis.length)];
+      h.style.cssText = `
+        left:${Math.random()*100}%;
+        animation-duration:${Math.random()*8+5}s;
+        animation-delay:${Math.random()*8}s;
+        font-size:${Math.random()*1.5+0.8}rem;
+      `;
+      heartEl.appendChild(h);
+    }
+
+    // ===== SORRY COUNTER =====
+    let count = 0;
+    const MAX = 100;
+    function addSorry() {
+      count++;
+      document.getElementById('sorryCount').textContent = count;
+      const pct = Math.min((count / MAX) * 100, 100);
+      document.getElementById('sorryFill').style.width = pct + '%';
+      spawnBurst(event);
+    }
+
+    // ===== EMOJI BURST =====
+    function spawnBurst(e) {
+      const burst = ['💙','✨','💫','🌟','💕','🎉','🥺'];
+      const container = document.getElementById('burstContainer');
+      const cx = e ? e.clientX : window.innerWidth / 2;
+      const cy = e ? e.clientY : window.innerHeight / 2;
+      for (let i = 0; i < 10; i++) {
+        const em = document.createElement('div');
+        em.className = 'burst-emoji';
+        em.textContent = burst[Math.floor(Math.random()*burst.length)];
+        const tx = (Math.random()-0.5)*300 + 'px';
+        const ty = (Math.random()-1)*300 + 'px';
+        em.style.cssText = `
+          left:${cx}px; top:${cy}px;
+          --tx:${tx}; --ty:${ty};
+          animation-duration:${Math.random()*0.8+0.8}s;
+          animation-delay:${Math.random()*0.2}s;
+        `;
+        container.appendChild(em);
+        em.addEventListener('animationend', () => em.remove());
+      }
+    }
+
+    // ===== NO BUTTON RUNS AWAY =====
+    const noBtn = document.getElementById('noBtn');
+    noBtn.addEventListener('mouseover', function() {
+      const maxX = window.innerWidth  - 160;
+      const maxY = window.innerHeight - 60;
+      noBtn.style.position = 'fixed';
+      noBtn.style.left = Math.random() * maxX + 'px';
+      noBtn.style.top  = Math.random() * maxY + 'px';
+      noBtn.style.zIndex = '9999';
+      noBtn.style.transition = 'left 0.3s, top 0.3s';
+    });
+
+    // ===== HANDLE YES/NO =====
+    function handleYes() {
+      document.getElementById('modalYes').classList.add('active');
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => spawnBurst({clientX: Math.random()*window.innerWidth, clientY: Math.random()*window.innerHeight}), i*200);
+      }
+    }
+
+    function handleNo() {
+      document.getElementById('modalNo').classList.add('active');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+      // Reset no button position
+      if (id === 'modalNo') {
+        noBtn.style.position = '';
+        noBtn.style.left = '';
+        noBtn.style.top = '';
+      }
+    }
+
+    // ===== CLOSE MODAL ON OVERLAY CLICK =====
+    document.querySelectorAll('.modal-overlay').forEach(el => {
+      el.addEventListener('click', function(e) {
+        if (e.target === this) this.classList.remove('active');
+      });
+    });
+  </script>
+</body>
+</html>
